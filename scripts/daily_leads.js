@@ -511,6 +511,91 @@ async function run() {
   }
 
   // ─────────────────────────────────────────────────────────
+  // PHASE 4 — ENVOYER LA CALL LIST PAR EMAIL
+  // ─────────────────────────────────────────────────────────
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@getmizra.com';
+  const allCallEntries = callLeads && callLeads.length > 0
+    ? callLeads.map(buildCallEntry)
+    : [];
+
+  if (BREVO_API_KEY && !DRY_RUN && allCallEntries.length > 0) {
+    console.log(`\n━━━ PHASE 4 : Envoi call list CSV par email ━━━`);
+
+    // Build CSV
+    const csvHeader = 'Priorite;Nom;Telephone;Email;Metier;Ville;Departement;Region;Opens;Clicks;Score;Script appel';
+    const csvRows = allCallEntries.map(e =>
+      [
+        e.priority_label.replace(/[🔥🟡⬜]/g, '').trim(),
+        e.nom,
+        e.telephone,
+        e.email,
+        e.metier,
+        e.ville,
+        e.departement,
+        e.region,
+        e.email_opens,
+        e.email_clicks,
+        e.engagement_score,
+        '"' + e.script.replace(/"/g, '""') + '"',
+      ].join(';')
+    );
+    const csvContent = csvHeader + '\n' + csvRows.join('\n');
+    const csvBase64 = Buffer.from('\uFEFF' + csvContent, 'utf-8').toString('base64');
+
+    // Summary for email body
+    const hotCount = allCallEntries.filter(e => e.email_clicks > 0 || e.email_opens >= 3).length;
+    const warmCount = allCallEntries.filter(e => e.email_opens >= 1 && e.email_opens < 3 && !e.email_clicks).length;
+    const coldCount = allCallEntries.filter(e => !e.email_opens).length;
+
+    const summaryHtml = `
+<h2>📞 Call List du ${today}</h2>
+<p><strong>${allCallEntries.length} leads à appeler</strong> (triés par engagement)</p>
+<table style="border-collapse:collapse;font-family:Arial;font-size:14px;margin:16px 0;">
+  <tr><td style="padding:4px 12px;">🔥 Chauds (clic ou 3+ opens)</td><td style="padding:4px 12px;font-weight:bold;">${hotCount}</td></tr>
+  <tr><td style="padding:4px 12px;">🟡 Tièdes (1-2 opens)</td><td style="padding:4px 12px;font-weight:bold;">${warmCount}</td></tr>
+  <tr><td style="padding:4px 12px;">⬜ Froids (pas d'open)</td><td style="padding:4px 12px;font-weight:bold;">${coldCount}</td></tr>
+</table>
+<p><strong>Top 5 :</strong></p>
+<ol style="font-family:Arial;font-size:14px;">
+${allCallEntries.slice(0, 5).map(e => `<li><strong>${e.nom}</strong> — ${e.telephone} — ${e.metier}, ${e.ville} (opens: ${e.email_opens}, clicks: ${e.email_clicks})</li>`).join('\n')}
+</ol>
+<hr style="margin:24px 0;">
+<p style="font-size:13px;color:#666;">
+📧 Emails envoyés aujourd'hui : ${totalEmailSent}<br>
+🔁 Relances J+3 : ${(relanceLeads || []).length}<br>
+📞 Call list : ${allCallEntries.length} leads
+</p>
+<p style="font-size:12px;color:#999;">Fichier CSV en pièce jointe. Ouvre-le dans Google Sheets ou Excel.</p>`;
+
+    try {
+      const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
+        body: JSON.stringify({
+          sender: { name: 'VitrineRGE Bot', email: BREVO_SENDER_EMAIL },
+          to: [{ email: ADMIN_EMAIL, name: 'Margaux' }],
+          subject: `📞 Call list du ${today} — ${allCallEntries.length} leads (${hotCount} chauds)`,
+          htmlContent: summaryHtml,
+          attachment: [{
+            content: csvBase64,
+            name: `call_list_${today}.csv`,
+          }],
+        }),
+      });
+      if (res.ok) {
+        console.log(`   ✅ Call list CSV envoyée à ${ADMIN_EMAIL}`);
+      } else {
+        const err = await res.text();
+        console.error(`   ❌ Brevo email error: ${err.substring(0, 200)}`);
+      }
+    } catch (err) {
+      console.error(`   ❌ Send call list error: ${err.message}`);
+    }
+  } else if (DRY_RUN && allCallEntries.length > 0) {
+    console.log(`\n━━━ PHASE 4 : [DRY RUN] Call list CSV → ${ADMIN_EMAIL} (${allCallEntries.length} leads) ━━━`);
+  }
+
+  // ─────────────────────────────────────────────────────────
   // LOG
   // ─────────────────────────────────────────────────────────
   if (!DRY_RUN) {
