@@ -72,8 +72,8 @@ tr:hover td{background:rgba(59,130,246,.05)}
 
 <div class="filters">
   <select id="filter-statut">
-    <option value="">Tous statuts</option>
-    <option value="email_sent" selected>Email envoy&eacute;</option>
+    <option value="" selected>Tous statuts</option>
+    <option value="email_sent">Email envoy&eacute;</option>
     <option value="relance_sent">Relance envoy&eacute;e</option>
     <option value="new">Nouveau</option>
     <option value="replied">A r&eacute;pondu</option>
@@ -136,7 +136,7 @@ let sortAsc = false;
 
 async function fetchLeads() {
   const res = await fetch(
-    SB_URL + '/rest/v1/leads_vitrinerge?select=*&has_phone=eq.true&order=engagement_score.desc,email_opens.desc,priority.desc&limit=500',
+    SB_URL + '/rest/v1/leads_vitrinerge?select=*&order=engagement_score.desc,email_opens.desc,priority.desc&limit=1000',
     { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
   );
   return res.json();
