@@ -28,7 +28,7 @@ exports.handler = async (event) => {
     }
   }
 
-  // 2. Notify admin via Resend
+  // 2. Notify admin via Brevo
   const metierLabels = {
     "pompe-a-chaleur": "Pompe à chaleur",
     "solaire": "Panneaux solaires",
@@ -41,16 +41,20 @@ exports.handler = async (event) => {
   };
 
   const metierLabel = metierLabels[metier] || metier || "—";
+  const BREVO_KEY = process.env.BREVO_API_KEY;
+  const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || "contact@vitrinerge.fr";
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "hello@getmizra.com";
 
-  try {
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
-      body: JSON.stringify({
-        from: "VitrineRGE <hello@getmizra.com>",
-        to: ["hello@getmizra.com"],
-        subject: `🟢 VitrineRGE — ${nom} (${metierLabel}, ${ville || "?"})`,
-        html: `<h2>Nouveau lead VitrineRGE</h2>
+  if (BREVO_KEY) {
+    try {
+      await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "api-key": BREVO_KEY },
+        body: JSON.stringify({
+          sender: { name: "VitrineRGE", email: SENDER_EMAIL },
+          to: [{ email: ADMIN_EMAIL }],
+          subject: `🟢 VitrineRGE — ${nom} (${metierLabel}, ${ville || "?"})`,
+          htmlContent: `<h2>Nouveau lead VitrineRGE</h2>
 <p><strong>Entreprise :</strong> ${nom}</p>
 <p><strong>Contact :</strong> ${contact_name || "—"}</p>
 <p><strong>Email :</strong> ${email}</p>
@@ -60,10 +64,11 @@ exports.handler = async (event) => {
 <p><strong>Message :</strong><br>${message || "—"}</p>
 <hr>
 <p style="color:#999;font-size:12px">Source: landing_vitrinerge | Params: metier=${metier_url || "—"}, ville=${ville_url || "—"}, region=${region_url || "—"}</p>`,
-      }),
-    });
-  } catch (err) {
-    console.error("Resend error:", err);
+        }),
+      });
+    } catch (err) {
+      console.error("Brevo notify error:", err);
+    }
   }
 
   return { statusCode: 200, body: JSON.stringify({ ok: true }) };
