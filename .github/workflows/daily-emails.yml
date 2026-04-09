@@ -1,0 +1,39 @@
+name: Daily VitrineRGE Outreach
+
+on:
+  schedule:
+    # Tous les jours à 9h Paris (7h UTC en été, 8h UTC en hiver)
+    - cron: '0 7 * * 1-5'  # Lundi-vendredi 9h CEST
+  workflow_dispatch: # Lancement manuel depuis GitHub
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: scripts
+        run: npm install
+
+      - name: Run daily leads (250 emails + relance J+3 + 50 call list)
+        working-directory: scripts
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          BREVO_SENDER_EMAIL: ${{ secrets.BREVO_SENDER_EMAIL }}
+          BREVO_SENDER_NAME: 'VitrineRGE'
+        run: node daily_leads.js
+
+      - name: Upload output files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: outreach-${{ github.run_id }}
+          path: scripts/output/
+          retention-days: 30

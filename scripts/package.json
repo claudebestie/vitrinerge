@@ -1,0 +1,9 @@
+{
+  "name": "vitrinerge-scripts",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "csv-parse": "^5.5.0"
+  }
+}
