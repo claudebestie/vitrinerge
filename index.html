@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a1a2e">
+<title>VitrineRGE — Site vitrine pour installateurs RGE | 520€</title>
+<meta name="description" content="Créez votre site vitrine professionnel d'installateur RGE en 5 jours. Pompe à chaleur, solaire, isolation. SEO local, formulaire devis, fiche Google. 520€ au lieu de 650€.">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://vitrinerge.fr/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vitrinerge.fr/">
+<meta property="og:title" content="VitrineRGE — Site vitrine pour installateurs RGE | 520€">
+<meta property="og:description" content="Site professionnel pour installateurs RGE. Pompe à chaleur, solaire, isolation. Livré en 5 jours. 520€ au lieu de 650€.">
+<meta property="og:locale" content="fr_FR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f172a;--navy-l:#1e293b;--blue:#2563eb;--blue-d:#1d4ed8;
+  --green:#16a34a;--green-l:#22c55e;--orange:#f97316;--red:#ef4444;
+  --bg:#f8fafc;--white:#fff;--gray-100:#f1f5f9;--gray-200:#e2e8f0;
+  --gray-400:#94a3b8;--gray-600:#475569;--gray-800:#1e293b;
+  --text:#0f172a;--text-m:#475569;--text-l:#94a3b8;
+  --radius:12px;--shadow:0 4px 24px rgba(0,0,0,.08);
+}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+.cx{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--gray-200);padding:16px 0}
+.nav .cx{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:1.4rem;font-weight:800;color:var(--navy);letter-spacing:-.5px}
+.nav-logo span{color:var(--green)}
+.nav-cta{background:var(--blue);color:var(--white);padding:10px 24px;border-radius:8px;font-weight:600;font-size:.9rem;transition:background .2s}
+.nav-cta:hover{background:var(--blue-d)}
+
+/* PROMO BANNER */
+.promo-banner{background:linear-gradient(135deg,var(--orange),#ea580c);color:var(--white);text-align:center;padding:12px 16px;font-size:.95rem;font-weight:600}
+.promo-banner strong{font-weight:800}
+
+/* HERO */
+.hero{padding:80px 0 60px;text-align:center}
+.hero-tag{display:inline-block;background:var(--green-l);color:var(--white);font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:20px;text-transform:uppercase;letter-spacing:.5px}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;line-height:1.15;margin-bottom:20px;color:var(--navy)}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{font-size:1.15rem;color:var(--text-m);max-width:650px;margin:0 auto 32px;line-height:1.7}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:var(--blue);color:var(--white)}
+.btn-primary:hover{background:var(--blue-d);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--gray-200)}
+.btn-outline:hover{border-color:var(--navy)}
+.hero-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:700px;margin:48px auto 0;text-align:center}
+.hero-metrics .m-num{font-size:1.8rem;font-weight:800;color:var(--navy)}
+.hero-metrics .m-label{font-size:.85rem;color:var(--text-m)}
+
+/* SECTIONS */
+.sec{padding:80px 0}
+.sec-alt{background:var(--white)}
+.sec-dark{background:var(--navy);color:var(--white)}
+.sec-label{color:var(--blue);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.sec-title{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:16px;line-height:1.2}
+.sec-desc{color:var(--text-m);font-size:1.05rem;max-width:600px;margin-bottom:40px}
+.sec-dark .sec-label{color:var(--orange)}
+.sec-dark .sec-desc{color:var(--gray-400)}
+
+/* FEATURES GRID */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.feature-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:28px;transition:box-shadow .2s}
+.feature-card:hover{box-shadow:var(--shadow)}
+.feature-icon{font-size:2rem;margin-bottom:12px}
+.feature-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.feature-card p{color:var(--text-m);font-size:.95rem}
+
+/* PRICING */
+.pricing-box{background:var(--white);border:2px solid var(--blue);border-radius:var(--radius);padding:40px;max-width:500px;margin:0 auto;text-align:center;position:relative;overflow:hidden}
+.pricing-badge{position:absolute;top:0;right:0;background:var(--orange);color:var(--white);font-size:.8rem;font-weight:700;padding:6px 20px;border-radius:0 0 0 12px}
+.price-old{font-size:1.4rem;color:var(--text-l);text-decoration:line-through;margin-bottom:4px}
+.price-new{font-size:3rem;font-weight:800;color:var(--green)}
+.price-new small{font-size:1rem;color:var(--text-m)}
+.pricing-note{color:var(--text-m);font-size:.9rem;margin:12px 0 24px}
+.pricing-features{list-style:none;text-align:left;margin-bottom:32px}
+.pricing-features li{padding:8px 0;border-bottom:1px solid var(--gray-100);font-size:.95rem}
+.pricing-features li::before{content:'✓';color:var(--green);font-weight:700;margin-right:10px}
+
+/* URGENCY */
+.urgency-box{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid var(--orange);border-radius:var(--radius);padding:24px;text-align:center;max-width:600px;margin:32px auto 0}
+.urgency-box p{font-size:1.05rem;font-weight:600;color:#92400e}
+
+/* FORM */
+.form-section{max-width:600px;margin:0 auto}
+.form-section form{display:flex;flex-direction:column;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-weight:600;font-size:.9rem;color:var(--gray-600)}
+.form-group input,.form-group select,.form-group textarea{padding:12px 16px;border:1px solid var(--gray-200);border-radius:8px;font-size:1rem;font-family:inherit;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-submit{background:var(--blue);color:var(--white);padding:16px;border:none;border-radius:8px;font-size:1.1rem;font-weight:700;cursor:pointer;transition:background .2s}
+.form-submit:hover{background:var(--blue-d)}
+.form-submit:disabled{opacity:.6;cursor:not-allowed}
+.form-note{text-align:center;color:var(--text-l);font-size:.85rem}
+.form-success{display:none;text-align:center;padding:40px;background:var(--green-l);color:var(--white);border-radius:var(--radius)}
+.form-success h3{font-size:1.4rem;margin-bottom:8px}
+
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.testimonial{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px}
+.testimonial-text{font-style:italic;margin-bottom:12px;color:var(--gray-600)}
+.testimonial-author{font-weight:700;font-size:.9rem}
+.testimonial-role{color:var(--text-l);font-size:.85rem}
+
+/* FAQ */
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--gray-200);padding:20px 0}
+.faq-q{font-weight:700;font-size:1.05rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-size:1.4rem;color:var(--blue);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s;color:var(--text-m)}
+.faq-item.open .faq-a{max-height:500px;padding-top:12px}
+
+/* FOOTER */
+.footer{background:var(--navy);color:var(--gray-400);padding:40px 0;text-align:center;font-size:.9rem}
+.footer a{color:var(--gray-400)}
+.footer a:hover{color:var(--white)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero-metrics{grid-template-columns:repeat(2,1fr);gap:16px}
+  .form-row{grid-template-columns:1fr}
+  .hero h1{font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner" id="promo-banner">
+  Offre de lancement — <strong>520€ au lieu de 650€</strong> jusqu'au 20 avril 2026
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+<div class="cx">
+  <a href="/" class="nav-logo">Vitrine<span>RGE</span></a>
+  <a href="#contact" class="nav-cta">Demander mon site</a>
+</div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+<div class="cx">
+  <div class="hero-tag">Installateurs RGE</div>
+  <h1 id="hero-h1">Vos futurs clients cherchent un installateur RGE.<br>Vous n'apparaissez nulle part.<br><em>On r&egrave;gle &ccedil;a en 5 jours.</em></h1>
+  <p class="hero-sub" id="hero-sub">Un site vitrine professionnel, optimis&eacute; pour Google, avec formulaire de devis int&eacute;gr&eacute;. Pour que les particuliers de votre d&eacute;partement vous trouvent en premier.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn btn-primary">Cr&eacute;er mon site &mdash; 520€</a>
+    <a href="#pricing" class="btn btn-outline">Voir l'offre</a>
+  </div>
+  <div class="hero-metrics">
+    <div><div class="m-num">5j</div><div class="m-label">Livraison</div></div>
+    <div><div class="m-num">520€</div><div class="m-label">Prix promo</div></div>
+    <div><div class="m-num">SEO</div><div class="m-label">Optimis&eacute; Google</div></div>
+    <div><div class="m-num">RGE</div><div class="m-label">Adapt&eacute; &agrave; votre m&eacute;tier</div></div>
+  </div>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section class="sec sec-alt">
+<div class="cx">
+  <div class="sec-label">Ce que vous obtenez</div>
+  <h2 class="sec-title">Un site qui travaille pour vous.</h2>
+  <p class="sec-desc">Tout ce qu'il faut pour que vos futurs clients vous trouvent sur Google et vous contactent.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>SEO local</h3>
+      <p>Votre site optimis&eacute; pour appara&icirc;tre sur &laquo; installateur [votre m&eacute;tier] + [votre ville] &raquo; dans Google.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Formulaire de devis</h3>
+      <p>Vos prospects remplissent une demande de devis directement depuis votre site. Vous recevez une notification.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Responsive mobile</h3>
+      <p>80% des recherches locales se font sur mobile. Votre site s'adapte parfaitement &agrave; tous les &eacute;crans.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📍</div>
+      <h3>Google Business</h3>
+      <p>Fiche Google Business optimis&eacute;e et reli&eacute;e &agrave; votre site pour appara&icirc;tre sur Google Maps.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏷️</div>
+      <h3>Badge RGE mis en avant</h3>
+      <p>Votre certification RGE affich&eacute;e de mani&egrave;re visible pour rassurer les particuliers.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Chargement rapide</h3>
+      <p>Score Google PageSpeed 90+. Un site rapide = meilleur r&eacute;f&eacute;rencement + plus de conversions.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing">
+<div class="cx" style="text-align:center">
+  <div class="sec-label">Tarif</div>
+  <h2 class="sec-title">Un seul prix. Tout inclus.</h2>
+  <p class="sec-desc" style="margin-left:auto;margin-right:auto">Paiement unique. Pas d'abonnement. Pas de frais cach&eacute;s.</p>
+
+  <div class="pricing-box">
+    <div class="pricing-badge">PROMO</div>
+    <h3 style="font-size:1.3rem;margin-bottom:16px">Offre Pr&eacute;sence</h3>
+    <div class="price-old">650€</div>
+    <div class="price-new">520€ <small>HT</small></div>
+    <p class="pricing-note">Offre valable jusqu'au 20 avril 2026</p>
+    <ul class="pricing-features">
+      <li>Site vitrine 1 page professionnel</li>
+      <li>Design adapt&eacute; &agrave; votre m&eacute;tier ENR</li>
+      <li>Optimisation SEO locale (ville + m&eacute;tier)</li>
+      <li>Formulaire de demande de devis</li>
+      <li>Int&eacute;gration Google Maps + fiche Google</li>
+      <li>Compatible mobile &amp; tablette</li>
+      <li>Certificat SSL (HTTPS)</li>
+      <li>H&eacute;bergement 1 an inclus</li>
+      <li>Livr&eacute; en 5 jours ouvr&eacute;s</li>
+    </ul>
+    <a href="#contact" class="btn btn-primary" style="width:100%;display:block;text-align:center">Demander mon site</a>
+  </div>
+
+  <!-- URGENCY -->
+  <div class="urgency-box" id="urgency-box">
+    <p>Il reste <strong>2 places disponibles</strong> sur votre d&eacute;partement ce mois-ci.</p>
+  </div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec sec-alt">
+<div class="cx" style="text-align:center">
+  <div class="sec-label">Comment &ccedil;a marche</div>
+  <h2 class="sec-title">3 &eacute;tapes. 5 jours. C'est tout.</h2>
+  <div class="features-grid" style="max-width:900px;margin:40px auto 0">
+    <div class="feature-card" style="text-align:center">
+      <div class="feature-icon">1️⃣</div>
+      <h3>Vous nous contactez</h3>
+      <p>Remplissez le formulaire. On vous rappelle sous 24h pour cerner vos besoins.</p>
+    </div>
+    <div class="feature-card" style="text-align:center">
+      <div class="feature-icon">2️⃣</div>
+      <h3>On cr&eacute;e votre site</h3>
+      <p>Notre &eacute;quipe cr&eacute;e votre site vitrine adapt&eacute; &agrave; votre m&eacute;tier et votre zone.</p>
+    </div>
+    <div class="feature-card" style="text-align:center">
+      <div class="feature-icon">3️⃣</div>
+      <h3>Vous recevez des leads</h3>
+      <p>Votre site est en ligne. Les demandes de devis commencent &agrave; arriver.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="sec sec-dark" id="contact">
+<div class="cx">
+  <div style="text-align:center;margin-bottom:40px">
+    <div class="sec-label">Contact</div>
+    <h2 class="sec-title" style="color:var(--white)">Prêt à être visible ?</h2>
+    <p class="sec-desc" style="margin-left:auto;margin-right:auto">Remplissez le formulaire, on vous recontacte sous 24h avec une proposition.</p>
+  </div>
+  <div class="form-section">
+    <form id="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-nom">Nom de l'entreprise *</label>
+          <input type="text" id="f-nom" name="nom" required placeholder="Ex: Dupont ENR">
+        </div>
+        <div class="form-group">
+          <label for="f-contact">Nom du contact</label>
+          <input type="text" id="f-contact" name="contact_name" placeholder="Pr&eacute;nom Nom">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-email">Email *</label>
+          <input type="email" id="f-email" name="email" required placeholder="contact@entreprise.fr">
+        </div>
+        <div class="form-group">
+          <label for="f-tel">T&eacute;l&eacute;phone</label>
+          <input type="tel" id="f-tel" name="telephone" placeholder="06 12 34 56 78">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-ville">Ville *</label>
+          <input type="text" id="f-ville" name="ville" required placeholder="Marseille">
+        </div>
+        <div class="form-group">
+          <label for="f-metier">M&eacute;tier *</label>
+          <select id="f-metier" name="metier" required>
+            <option value="">Choisir...</option>
+            <option value="pompe-a-chaleur">Pompe &agrave; chaleur</option>
+            <option value="solaire">Panneaux solaires</option>
+            <option value="forage">Forage g&eacute;othermique</option>
+            <option value="climatisation">Climatisation</option>
+            <option value="chaudiere">Chaudi&egrave;re</option>
+            <option value="isolation">Isolation</option>
+            <option value="ventilation">Ventilation / VMC</option>
+            <option value="ballon-thermodynamique">Ballon thermodynamique</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="f-message">Message (optionnel)</label>
+        <textarea id="f-message" name="message" rows="3" placeholder="Décrivez votre activité, vos besoins..."></textarea>
+      </div>
+      <!-- Hidden fields from URL params -->
+      <input type="hidden" id="f-metier-url" name="metier_url" value="">
+      <input type="hidden" id="f-ville-url" name="ville_url" value="">
+      <input type="hidden" id="f-region-url" name="region_url" value="">
+      <input type="hidden" name="source" value="landing_vitrinerge">
+      <button type="submit" class="form-submit" id="form-submit">Envoyer ma demande</button>
+      <p class="form-note" style="color:var(--gray-400)">Réponse sous 24h. Aucun engagement.</p>
+    </form>
+    <div class="form-success" id="form-success">
+      <h3>Merci !</h3>
+      <p>Votre demande a bien &eacute;t&eacute; envoy&eacute;e. On vous recontacte sous 24h.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec-alt">
+<div class="cx" style="text-align:center">
+  <div class="sec-label">FAQ</div>
+  <h2 class="sec-title">Questions fr&eacute;quentes</h2>
+  <div class="faq-list" style="text-align:left;margin-top:32px">
+    <div class="faq-item">
+      <div class="faq-q">Pourquoi 520€ et pas plus ?</div>
+      <div class="faq-a"><p>Nous utilisons des templates optimis&eacute;s par m&eacute;tier ENR. Pas de design from scratch = gain de temps = prix plus bas. La qualit&eacute; reste professionnelle.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Mon site sera-t-il unique ?</div>
+      <div class="faq-a"><p>Oui. Le template est adapt&eacute; avec vos couleurs, votre logo, vos photos et vos textes. Deux installateurs dans la m&ecirc;me ville n'auront jamais le m&ecirc;me site.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Faut-il un abonnement mensuel ?</div>
+      <div class="faq-a"><p>Non. Le paiement est unique. L'h&eacute;bergement est inclus pour 1 an. Au-del&agrave;, comptez 10€/mois si vous souhaitez qu'on g&egrave;re l'h&eacute;bergement.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Qu'est-ce que le SEO local ?</div>
+      <div class="faq-a"><p>C'est l'optimisation de votre site pour appara&icirc;tre quand un particulier cherche &laquo; installateur pompe &agrave; chaleur Marseille &raquo; par exemple. On optimise le titre, les balises, et la fiche Google.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Je n'ai pas de photos professionnelles, c'est grave ?</div>
+      <div class="faq-a"><p>Non. On utilise des visuels professionnels adapt&eacute;s &agrave; votre m&eacute;tier. Si vous avez des photos de chantiers, c'est un plus, mais ce n'est pas obligatoire.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Combien de temps pour &ecirc;tre visible sur Google ?</div>
+      <div class="faq-a"><p>Le site est index&eacute; sous quelques jours. Pour le SEO local (remonter dans les r&eacute;sultats), comptez 2 &agrave; 8 semaines selon la concurrence dans votre zone.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="cx">
+  <p><strong>Vitrine<span style="color:var(--green)">RGE</span></strong> &mdash; Sites vitrines pour installateurs RGE</p>
+  <p style="margin-top:8px">&copy; 2026 VitrineRGE. Tous droits r&eacute;serv&eacute;s. &mdash; <a href="mailto:contact@vitrinerge.fr">contact@vitrinerge.fr</a></p>
+</div>
+</footer>
+
+<script>
+// ── URL PARAMS → dynamic content ────────────────────────────
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const metier = params.get('metier');
+  const ville = params.get('ville');
+  const region = params.get('region');
+
+  // Populate hidden fields
+  if (metier) document.getElementById('f-metier-url').value = metier;
+  if (ville) document.getElementById('f-ville-url').value = ville;
+  if (region) document.getElementById('f-region-url').value = region;
+
+  // Metier labels
+  const metierLabels = {
+    'pompe-a-chaleur': 'pompe \u00e0 chaleur',
+    'solaire': 'panneaux solaires',
+    'forage': 'forage g\u00e9othermique',
+    'climatisation': 'climatisation',
+    'chaudiere': 'chaudi\u00e8re',
+    'isolation': 'isolation',
+    'ventilation': 'ventilation',
+    'ballon-thermodynamique': 'ballon thermodynamique',
+  };
+
+  // Dynamic H1
+  if (metier && ville) {
+    const ml = metierLabels[metier] || metier.replace(/-/g, ' ');
+    document.getElementById('hero-h1').innerHTML =
+      'Vos futurs clients cherchent un installateur <em>' + ml + '</em> \u00e0 ' + ville + '.<br>Vous n\u2019\u00eates pas l\u00e0.<br><em>On r\u00e8gle \u00e7a en 5\u00a0jours.</em>';
+  } else if (metier) {
+    const ml = metierLabels[metier] || metier.replace(/-/g, ' ');
+    document.getElementById('hero-h1').innerHTML =
+      'Vos futurs clients cherchent un installateur <em>' + ml + '</em>.<br>Vous n\u2019apparaissez nulle part.<br><em>On r\u00e8gle \u00e7a en 5\u00a0jours.</em>';
+  }
+
+  // Pre-fill form fields
+  if (ville) document.getElementById('f-ville').value = ville;
+  if (metier) {
+    const select = document.getElementById('f-metier');
+    for (const opt of select.options) {
+      if (opt.value === metier) { opt.selected = true; break; }
+    }
+  }
+
+  // Urgency box with department
+  if (region) {
+    document.getElementById('urgency-box').querySelector('p').innerHTML =
+      'Il reste <strong>2 places disponibles</strong> en ' + region + ' ce mois-ci.';
+  }
+})();
+
+// ── FAQ accordion ───────────────────────────────────────────
+document.querySelectorAll('.faq-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    this.parentElement.classList.toggle('open');
+  });
+});
+
+// ── FORM SUBMISSION → Supabase ──────────────────────────────
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('form-submit');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours...';
+
+  const form = e.target;
+  const data = {
+    nom: form.nom.value.trim(),
+    contact_name: form.contact_name.value.trim(),
+    email: form.email.value.trim(),
+    telephone: form.telephone.value.trim(),
+    ville: form.ville.value.trim(),
+    metier: form.metier.value,
+    message: form.message.value.trim(),
+    metier_url: form.metier_url.value,
+    ville_url: form.ville_url.value,
+    region_url: form.region_url.value,
+    source: form.source.value,
+    created_at: new Date().toISOString(),
+  };
+
+  try {
+    // 1. Save to Supabase directly
+    var SB_URL = 'https://rofkgmwjggvxlgrdnsyt.supabase.co';
+    var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvZmtnbXdqZ2d2eGxncmRuc3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzA2MTgsImV4cCI6MjA4NzUwNjYxOH0.6nlnX-0wUlID-630j5fOyveEAG0Lrp2gWhgGMRKpmNk';
+    var saved = false;
+
+    try {
+      var r1 = await fetch(SB_URL + '/rest/v1/vitrinerge_contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify(data),
+      });
+      if (r1.ok) saved = true;
+    } catch (err) { console.error('Supabase error:', err); }
+
+    // 2. Send notification via Netlify function
+    var notified = false;
+    try {
+      var r2 = await fetch('/.netlify/functions/vitrinerge-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (r2.ok) notified = true;
+    } catch (err) { console.error('Notify error:', err); }
+
+    if (saved || notified) {
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Envoyer ma demande';
+      alert('Erreur lors de l\u2019envoi. Veuillez r\u00e9essayer ou nous contacter par email.');
+    }
+  } catch (err) {
+    console.error('Submit error:', err);
+    btn.disabled = false;
+    btn.textContent = 'Envoyer ma demande';
+    alert('Erreur lors de l\u2019envoi. Veuillez r\u00e9essayer ou nous contacter par email.');
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/crm"
+  to = "/crm.html"
+  status = 200
+
+# SPA-style: serve index.html for all unknown routes (URL params support)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

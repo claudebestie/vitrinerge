@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VitrineRGE — CRM Call List</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f172a;--card:#1e293b;--border:#334155;--blue:#3b82f6;--green:#22c55e;--orange:#f97316;--red:#ef4444;--yellow:#eab308;--text:#e2e8f0;--text-m:#94a3b8;--text-d:#64748b}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.top{background:var(--card);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.top h1{font-size:1.2rem;font-weight:700}.top h1 span{color:var(--green)}
+.top-right{display:flex;gap:12px;align-items:center}
+.badge{font-size:.75rem;padding:4px 10px;border-radius:12px;font-weight:600}
+.badge-blue{background:rgba(59,130,246,.2);color:var(--blue)}
+.badge-green{background:rgba(34,197,94,.2);color:var(--green)}
+.badge-orange{background:rgba(249,115,22,.2);color:var(--orange)}
+.filters{padding:16px 24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:.85rem}
+.filters select:focus,.filters input:focus{outline:none;border-color:var(--blue)}
+.btn{padding:8px 16px;border-radius:6px;font-weight:600;font-size:.85rem;cursor:pointer;border:none;transition:all .2s}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#2563eb}
+.btn-outline{background:transparent;color:var(--text-m);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--text)}
+.stats{padding:0 24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 20px;min-width:120px}
+.stat-num{font-size:1.6rem;font-weight:800}.stat-label{font-size:.75rem;color:var(--text-m);margin-top:2px}
+table{width:100%;border-collapse:collapse}
+thead{position:sticky;top:56px;z-index:5}
+th{background:var(--card);color:var(--text-m);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+th:hover{color:var(--text)}
+th.sorted{color:var(--blue)}
+td{padding:10px 12px;border-bottom:1px solid rgba(51,65,85,.5);font-size:.85rem;vertical-align:middle}
+tr:hover td{background:rgba(59,130,246,.05)}
+.hot{color:var(--orange);font-weight:700}
+.warm{color:var(--yellow);font-weight:600}
+.cold{color:var(--text-d)}
+.engagement-bar{display:flex;align-items:center;gap:6px}
+.bar{height:6px;border-radius:3px;min-width:4px}
+.bar-opens{background:var(--blue)}
+.bar-clicks{background:var(--green)}
+.tag{font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:500}
+.tag-hot{background:rgba(249,115,22,.2);color:var(--orange)}
+.tag-warm{background:rgba(234,179,8,.2);color:var(--yellow)}
+.tag-cold{background:rgba(100,116,139,.2);color:var(--text-d)}
+.tag-clicked{background:rgba(239,68,68,.2);color:var(--red)}
+.phone-link{color:var(--blue);text-decoration:none;font-weight:600}
+.phone-link:hover{text-decoration:underline}
+.empty{text-align:center;padding:60px;color:var(--text-d)}
+.loading{text-align:center;padding:60px;color:var(--text-m)}
+@media(max-width:768px){
+  .filters{flex-direction:column}
+  .stats{flex-direction:column}
+  table{font-size:.75rem}
+  td,th{padding:6px 8px}
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="top">
+  <h1>Vitrine<span>RGE</span> &mdash; Call List</h1>
+  <div class="top-right">
+    <span class="badge badge-blue" id="badge-total">-</span>
+    <span class="badge badge-orange" id="badge-hot">-</span>
+    <button class="btn btn-blue" onclick="refresh()">Rafraichir</button>
+    <button class="btn btn-outline" onclick="exportCSV()">Export CSV</button>
+  </div>
+</div>
+
+<div class="filters">
+  <select id="filter-statut">
+    <option value="">Tous statuts</option>
+    <option value="email_sent" selected>Email envoy&eacute;</option>
+    <option value="relance_sent">Relance envoy&eacute;e</option>
+    <option value="new">Nouveau</option>
+    <option value="replied">A r&eacute;pondu</option>
+  </select>
+  <select id="filter-metier">
+    <option value="">Tous m&eacute;tiers</option>
+    <option value="pompe-a-chaleur">Pompe &agrave; chaleur</option>
+    <option value="solaire">Solaire</option>
+    <option value="forage">Forage</option>
+    <option value="climatisation">Climatisation</option>
+    <option value="chaudiere">Chaudi&egrave;re</option>
+    <option value="isolation">Isolation</option>
+    <option value="ventilation">Ventilation</option>
+    <option value="ballon-thermodynamique">Ballon thermo</option>
+  </select>
+  <select id="filter-region">
+    <option value="">Toutes r&eacute;gions</option>
+  </select>
+  <select id="filter-engagement">
+    <option value="">Tout engagement</option>
+    <option value="hot">Chaud (clic ou 3+ ouvertures)</option>
+    <option value="warm">Ti&egrave;de (1-2 ouvertures)</option>
+    <option value="cold">Froid (pas d'ouverture)</option>
+  </select>
+  <input type="text" id="filter-search" placeholder="Rechercher nom, ville, email...">
+</div>
+
+<div class="stats" id="stats-bar"></div>
+
+<div id="table-container">
+  <div class="loading" id="loading">Chargement...</div>
+  <table id="leads-table" style="display:none">
+    <thead>
+      <tr>
+        <th data-sort="engagement_score" class="sorted">Engagement</th>
+        <th data-sort="nom">Entreprise</th>
+        <th data-sort="telephone">T&eacute;l&eacute;phone</th>
+        <th data-sort="metier">M&eacute;tier</th>
+        <th data-sort="ville">Ville</th>
+        <th data-sort="region">R&eacute;gion</th>
+        <th data-sort="email_opens">Opens</th>
+        <th data-sort="email_clicks">Clicks</th>
+        <th data-sort="last_opened_at">Derni&egrave;re ouverture</th>
+        <th data-sort="statut">Statut</th>
+      </tr>
+    </thead>
+    <tbody id="leads-body"></tbody>
+  </table>
+  <div class="empty" id="empty" style="display:none">Aucun lead trouv&eacute;</div>
+</div>
+
+<script>
+// ── CONFIG — set your Supabase credentials here ──
+const SB_URL = 'https://rofkgmwjggvxlgrdnsyt.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvZmtnbXdqZ2d2eGxncmRuc3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzA2MTgsImV4cCI6MjA4NzUwNjYxOH0.6nlnX-0wUlID-630j5fOyveEAG0Lrp2gWhgGMRKpmNk';
+
+let allLeads = [];
+let sortCol = 'engagement_score';
+let sortAsc = false;
+
+async function fetchLeads() {
+  const res = await fetch(
+    SB_URL + '/rest/v1/leads_vitrinerge?select=*&has_phone=eq.true&order=engagement_score.desc,email_opens.desc,priority.desc&limit=500',
+    { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
+  );
+  return res.json();
+}
+
+function engagementTag(lead) {
+  if (lead.email_clicks > 0) return { label: 'A CLIQUE', cls: 'tag-clicked', level: 'hot' };
+  if (lead.email_opens >= 3) return { label: 'CHAUD', cls: 'tag-hot', level: 'hot' };
+  if (lead.email_opens >= 1) return { label: 'TIEDE', cls: 'tag-warm', level: 'warm' };
+  return { label: 'FROID', cls: 'tag-cold', level: 'cold' };
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '—';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return mins + 'min';
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours + 'h';
+  return Math.floor(hours / 24) + 'j';
+}
+
+function renderStats(leads) {
+  const total = leads.length;
+  const hot = leads.filter(l => l.email_clicks > 0 || l.email_opens >= 3).length;
+  const warm = leads.filter(l => l.email_opens >= 1 && l.email_opens < 3 && !l.email_clicks).length;
+  const cold = leads.filter(l => !l.email_opens).length;
+
+  document.getElementById('badge-total').textContent = total + ' leads';
+  document.getElementById('badge-hot').textContent = hot + ' chauds';
+
+  document.getElementById('stats-bar').innerHTML =
+    '<div class="stat"><div class="stat-num">' + total + '</div><div class="stat-label">Total avec tel</div></div>' +
+    '<div class="stat"><div class="stat-num" style="color:var(--orange)">' + hot + '</div><div class="stat-label">Chauds</div></div>' +
+    '<div class="stat"><div class="stat-num" style="color:var(--yellow)">' + warm + '</div><div class="stat-label">Tiedes</div></div>' +
+    '<div class="stat"><div class="stat-num" style="color:var(--text-d)">' + cold + '</div><div class="stat-label">Froids</div></div>';
+}
+
+function renderRegions(leads) {
+  const regions = [...new Set(leads.map(l => l.region).filter(Boolean))].sort();
+  const sel = document.getElementById('filter-region');
+  regions.forEach(function(r) {
+    const opt = document.createElement('option');
+    opt.value = r; opt.textContent = r;
+    sel.appendChild(opt);
+  });
+}
+
+function applyFilters() {
+  const statut = document.getElementById('filter-statut').value;
+  const metier = document.getElementById('filter-metier').value;
+  const region = document.getElementById('filter-region').value;
+  const engagement = document.getElementById('filter-engagement').value;
+  const search = document.getElementById('filter-search').value.toLowerCase();
+
+  let filtered = allLeads.filter(function(l) {
+    if (statut && l.statut !== statut) return false;
+    if (metier && l.metier !== metier) return false;
+    if (region && l.region !== region) return false;
+    if (search && !(l.nom || '').toLowerCase().includes(search) && !(l.ville || '').toLowerCase().includes(search) && !(l.email || '').toLowerCase().includes(search)) return false;
+    if (engagement === 'hot' && !(l.email_clicks > 0 || l.email_opens >= 3)) return false;
+    if (engagement === 'warm' && !(l.email_opens >= 1 && l.email_opens < 3 && !l.email_clicks)) return false;
+    if (engagement === 'cold' && l.email_opens > 0) return false;
+    return true;
+  });
+
+  // Sort
+  filtered.sort(function(a, b) {
+    let va = a[sortCol], vb = b[sortCol];
+    if (va == null) va = '';
+    if (vb == null) vb = '';
+    if (typeof va === 'number' && typeof vb === 'number') return sortAsc ? va - vb : vb - va;
+    return sortAsc ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
+  });
+
+  renderTable(filtered);
+  renderStats(filtered);
+}
+
+function renderTable(leads) {
+  const tbody = document.getElementById('leads-body');
+  const table = document.getElementById('leads-table');
+  const empty = document.getElementById('empty');
+
+  if (leads.length === 0) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  table.style.display = 'table';
+  empty.style.display = 'none';
+
+  tbody.innerHTML = leads.map(function(l) {
+    const eng = engagementTag(l);
+    const maxBar = 20;
+    const openBar = Math.min((l.email_opens || 0) * 4, maxBar);
+    const clickBar = Math.min((l.email_clicks || 0) * 8, maxBar);
+
+    return '<tr>' +
+      '<td><span class="tag ' + eng.cls + '">' + eng.label + '</span>' +
+        '<div class="engagement-bar" style="margin-top:4px"><div class="bar bar-opens" style="width:' + openBar + 'px"></div><div class="bar bar-clicks" style="width:' + clickBar + 'px"></div></div></td>' +
+      '<td><strong>' + (l.nom || '') + '</strong><br><span style="color:var(--text-d);font-size:.75rem">' + (l.email || '') + '</span></td>' +
+      '<td><a href="tel:' + (l.telephone || '') + '" class="phone-link">' + (l.telephone || '—') + '</a></td>' +
+      '<td>' + (l.metier_label || l.metier || '') + '</td>' +
+      '<td>' + (l.ville || '') + '</td>' +
+      '<td>' + (l.region || '') + '</td>' +
+      '<td style="text-align:center;font-weight:700;' + (l.email_opens > 0 ? 'color:var(--blue)' : '') + '">' + (l.email_opens || 0) + '</td>' +
+      '<td style="text-align:center;font-weight:700;' + (l.email_clicks > 0 ? 'color:var(--green)' : '') + '">' + (l.email_clicks || 0) + '</td>' +
+      '<td style="color:var(--text-m)">' + timeAgo(l.last_opened_at) + '</td>' +
+      '<td><span style="font-size:.75rem">' + (l.statut || '') + '</span></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function exportCSV() {
+  const rows = [['Priorite', 'Nom', 'Telephone', 'Email', 'Metier', 'Ville', 'Region', 'Opens', 'Clicks', 'Score', 'Statut']];
+  const tbody = document.getElementById('leads-body');
+  allLeads.forEach(function(l) {
+    const eng = engagementTag(l);
+    rows.push([eng.label, l.nom, l.telephone, l.email, l.metier_label || l.metier, l.ville, l.region, l.email_opens, l.email_clicks, l.engagement_score, l.statut]);
+  });
+  const csv = rows.map(function(r) { return r.map(function(v) { return '"' + String(v || '').replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'call_list_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+async function refresh() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('leads-table').style.display = 'none';
+  allLeads = await fetchLeads();
+  document.getElementById('loading').style.display = 'none';
+  renderRegions(allLeads);
+  applyFilters();
+}
+
+// Sort on header click
+document.querySelectorAll('th[data-sort]').forEach(function(th) {
+  th.addEventListener('click', function() {
+    const col = this.dataset.sort;
+    if (sortCol === col) { sortAsc = !sortAsc; }
+    else { sortCol = col; sortAsc = false; }
+    document.querySelectorAll('th').forEach(function(t) { t.classList.remove('sorted'); });
+    this.classList.add('sorted');
+    applyFilters();
+  });
+});
+
+// Filter listeners
+['filter-statut', 'filter-metier', 'filter-region', 'filter-engagement'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', applyFilters);
+});
+document.getElementById('filter-search').addEventListener('input', applyFilters);
+
+// Init
+refresh();
+</script>
+</body>
+</html>
