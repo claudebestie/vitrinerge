@@ -44,10 +44,11 @@ exports.handler = async (event) => {
   const BREVO_KEY = process.env.BREVO_API_KEY;
   const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || "contact@vitrinerge.fr";
 
-  // Send to both hello@vitrinerge.fr and hello@getmizra.com
   const RECIPIENTS = [
     { email: "hello@vitrinerge.fr" },
     { email: "hello@getmizra.com" },
+    { email: "gestion@gazservice45.fr" },
+    { email: "f.saintcricq@wanadoo.fr" },
   ];
 
   if (BREVO_KEY) {

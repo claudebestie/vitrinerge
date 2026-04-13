@@ -11,7 +11,7 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
 const BREVO_SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || 'contact@vitrinerge.fr';
 const BREVO_SENDER_NAME = process.env.BREVO_SENDER_NAME || 'VitrineRGE';
-const EMAIL_COUNT = 250;
+const EMAIL_COUNT = 1000;
 const CALL_COUNT = 50;
 const RELANCE_DELAY_DAYS = 3;
 const DRY_RUN = process.env.DRY_RUN === 'true';
