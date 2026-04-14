@@ -42,7 +42,7 @@ exports.handler = async (event) => {
 
   const metierLabel = metierLabels[metier] || metier || "—";
   const BREVO_KEY = process.env.BREVO_API_KEY;
-  const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || "contact@vitrinerge.fr";
+  const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || "hello@vitrinerge.fr";
 
   const RECIPIENTS = [
     { email: "hello@vitrinerge.fr" },
